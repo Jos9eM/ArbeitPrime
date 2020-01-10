@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/errorLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:visibility="gone"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <ImageView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/errorTitle"
+        android:id="@+id/errorImage"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:src="@drawable/wifi"/>
+
+    <TextView
+        android:id="@+id/errorTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/errorImage"
+        app:layout_constraintBottom_toBottomOf="@+id/errorMessage"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:text="Error Title"
+        android:fontFamily="sans-serif-light"/>
+
+    <TextView
+        android:id="@+id/errorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/errorTitle"
+        app:layout_constraintBottom_toTopOf="@+id/retry"
+        android:textSize="18sp"
+        android:text="Error Message"
+        android:layout_below="@+id/errorTitle"
+        android:fontFamily="sans-serif-light"/>
+
+
+    <Button
+        android:id="@+id/retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="@string/retry"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/errorMessage"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

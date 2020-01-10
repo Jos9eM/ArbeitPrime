@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Arbeit Prime</string>
+
+    <string name="top">Top 10</string>
+    <string name="retry">Retry</string>
+    <string name="tituloOriginal">Titulo Original</string>
+    <string name="desc">Descripción </string>
+
+
 </resources>
