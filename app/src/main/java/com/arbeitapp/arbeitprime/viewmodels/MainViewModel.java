@@ -15,7 +15,6 @@ public class MainViewModel extends ViewModel {
     private LiveData<Resource<List<Movie>>> topMovies;
     private MovieRepository movieRepository;
 
-
     public MainViewModel(){
         movieRepository = new MovieRepository();
         topMovies = movieRepository.getTopMovies();

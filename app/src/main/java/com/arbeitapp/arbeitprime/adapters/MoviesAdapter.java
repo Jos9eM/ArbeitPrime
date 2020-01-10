@@ -1,6 +1,7 @@
 package com.arbeitapp.arbeitprime.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,9 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.arbeitapp.arbeitprime.R;
 import com.arbeitapp.arbeitprime.models.Movie;
-import com.arbeitapp.arbeitprime.utils.Utils;
+import com.arbeitapp.arbeitprime.utils.context.MyApp;
+import com.arbeitapp.arbeitprime.utils.others.Utils;
+import com.arbeitapp.arbeitprime.views.DetailActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -28,14 +31,23 @@ import com.bumptech.glide.request.target.Target;
 
 import java.util.List;
 
-public class MoviesAdapter extends PagerAdapter implements View.OnClickListener {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
+
+public class MoviesAdapter extends PagerAdapter {
 
     private Context context;
+    private String EXTRA_MESSAGE = "Id";
     private List <Movie> movieList;
-    private View view;
-    private ProgressBar progressBar;
-    private ImageView imageView;
-    private TextView titulo, descripcion;
+
+
+    @BindView(R.id.title) TextView titulo;
+    @BindView(R.id.description) TextView descripcion;
+    @BindView(R.id.imageCaroussel) ImageView imageView;
+    @BindView(R.id.progress) ProgressBar progressBar;
+
 
     public MoviesAdapter(Context context, List<Movie> movieList) {
         this.context = context;
@@ -59,11 +71,9 @@ public class MoviesAdapter extends PagerAdapter implements View.OnClickListener 
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
-        view = LayoutInflater.from(context).inflate(R.layout.item_caroussel, container, false);
-        imageView = view.findViewById(R.id.imageCaroussel);
-        titulo = view.findViewById(R.id.title);
-        descripcion = view.findViewById(R.id.description);
-        progressBar = view.findViewById(R.id.progress);
+        View view1 = LayoutInflater.from(context).inflate(R.layout.item_caroussel, container, false);
+
+        ButterKnife.bind(this, view1);
 
         String[] imagesUrl =  new String[10];
         String[] titles =  new String[10];
@@ -90,13 +100,15 @@ public class MoviesAdapter extends PagerAdapter implements View.OnClickListener 
         titulo.setText(titles[position]);
         descripcion.setText(descriptions[position]);
 
-        container.addView(view);
+        container.addView(view1);
 
-        view.setOnClickListener(v -> {
-
+        view1.setOnClickListener(view -> {
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra(EXTRA_MESSAGE, movieList.get(position).getId());
+            context.startActivity(intent);
         });
 
-        return view;
+        return view1;
     }
 
     private RequestListener<Drawable> requestListener = new RequestListener<Drawable>() {
@@ -122,8 +134,4 @@ public class MoviesAdapter extends PagerAdapter implements View.OnClickListener 
         container.removeView((View) object);
     }
 
-    @Override
-    public void onClick(View v) {
-
-    }
 }

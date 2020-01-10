@@ -27,7 +27,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/errorMessage"
         android:textStyle="bold"
         android:textSize="18sp"
-        android:text="Error Title"
+        android:text="No fue Posible Acceder al Contenido"
         android:fontFamily="sans-serif-light"/>
 
     <TextView
@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/errorTitle"
         app:layout_constraintBottom_toTopOf="@+id/retry"
         android:textSize="18sp"
-        android:text="Error Message"
+        android:text="Error! Error! Error!"
         android:layout_below="@+id/errorTitle"
         android:fontFamily="sans-serif-light"/>
 
@@ -50,6 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
+        android:visibility="gone"
         android:text="@string/retry"
         android:textColor="@color/white"
         android:background="@drawable/btn_bg"

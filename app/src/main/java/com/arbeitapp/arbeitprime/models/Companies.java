@@ -51,4 +51,5 @@ public class Companies {
     public void setOriginCountry(String originCountry) {
         this.originCountry = originCountry;
     }
+
 }

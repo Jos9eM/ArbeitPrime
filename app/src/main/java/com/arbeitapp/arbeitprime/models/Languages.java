@@ -7,17 +7,17 @@ public class Languages {
 
     @SerializedName("iso_639_1")
     @Expose
-    private String iso639;
+    private String iso6391;
     @SerializedName("name")
     @Expose
     private String name;
 
-    public String getIso639() {
-        return iso639;
+    public String getIso6391() {
+        return iso6391;
     }
 
-    public void setIso639(String iso639) {
-        this.iso639 = iso639;
+    public void setIso6391(String iso6391) {
+        this.iso6391 = iso6391;
     }
 
     public String getName() {

@@ -1,6 +1,6 @@
 package com.arbeitapp.arbeitprime.api;
 
-import com.arbeitapp.arbeitprime.utils.Utils;
+import com.arbeitapp.arbeitprime.utils.others.Utils;
 
 import java.io.IOException;
 

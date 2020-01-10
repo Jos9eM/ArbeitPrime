@@ -1,4 +1,4 @@
-package com.arbeitapp.arbeitprime.utils;
+package com.arbeitapp.arbeitprime.utils.others;
 
 import android.view.View;
 

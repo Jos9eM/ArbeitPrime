@@ -5,6 +5,7 @@
     <string name="retry">Retry</string>
     <string name="tituloOriginal">Titulo Original</string>
     <string name="desc">Descripción </string>
-
+    <string name="share">Share </string>
+    <string name="salirApp">Esta Seguro que desea Salir de la Aplicación?</string>
 
 </resources>

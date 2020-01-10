@@ -15,13 +15,13 @@ public class Detail {
     private String backdropPath;
     @SerializedName("belongs_to_collection")
     @Expose
-    private Object belongsCollection;
+    private Object belongsToCollection;
     @SerializedName("budget")
     @Expose
     private Integer budget;
     @SerializedName("genres")
     @Expose
-    private List<Genres> genres;
+    private List<Genres> genres = null;
     @SerializedName("homepage")
     @Expose
     private String homepage;
@@ -48,10 +48,10 @@ public class Detail {
     private String posterPath;
     @SerializedName("production_companies")
     @Expose
-    private List<Companies> productionCompanies;
+    private List<Companies> productionCompanies = null;
     @SerializedName("production_countries")
     @Expose
-    private List<Countrys> productionCountrys;
+    private List<Countrys> productionCountries = null;
     @SerializedName("release_date")
     @Expose
     private String releaseDate;
@@ -63,7 +63,7 @@ public class Detail {
     private Integer runtime;
     @SerializedName("spoken_languages")
     @Expose
-    private List<Languages> spokenLanguages;
+    private List<Languages> spokenLanguages = null;
     @SerializedName("status")
     @Expose
     private String status;
@@ -83,6 +83,7 @@ public class Detail {
     @Expose
     private Integer voteCount;
 
+
     public Boolean getAdult() {
         return adult;
     }
@@ -99,12 +100,12 @@ public class Detail {
         this.backdropPath = backdropPath;
     }
 
-    public Object getBelongsCollection() {
-        return belongsCollection;
+    public Object getBelongsToCollection() {
+        return belongsToCollection;
     }
 
-    public void setBelongsCollection(Object belongsCollection) {
-        this.belongsCollection = belongsCollection;
+    public void setBelongsToCollection(Object belongsToCollection) {
+        this.belongsToCollection = belongsToCollection;
     }
 
     public Integer getBudget() {
@@ -195,12 +196,12 @@ public class Detail {
         this.productionCompanies = productionCompanies;
     }
 
-    public List<Countrys> getProductionCountrys() {
-        return productionCountrys;
+    public List<Countrys> getProductionCountries() {
+        return productionCountries;
     }
 
-    public void setProductionCountrys(List<Countrys> productionCountrys) {
-        this.productionCountrys = productionCountrys;
+    public void setProductionCountries(List<Countrys> productionCountries) {
+        this.productionCountries = productionCountries;
     }
 
     public String getReleaseDate() {

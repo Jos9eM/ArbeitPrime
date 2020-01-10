@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:text="@string/top"
         android:drawableEnd="@drawable/ic_right"
+        android:drawableTint="@color/white"
+        android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -23,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="550dp"
         app:layout_constraintTop_toBottomOf="@+id/title"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@+id/dots"/>
 
     <LinearLayout
         android:id="@+id/dots"
@@ -32,8 +34,7 @@
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/viewPager"/>
-
-    <include layout="@layout/error"/>
+        app:layout_constraintTop_toBottomOf="@+id/viewPager"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

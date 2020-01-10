@@ -84,6 +84,7 @@ public abstract class NetworkBoundResource <ResultType, RequestType> {
 
     @MainThread
     protected void onFetchFailed() {
+
     }
 
     public final LiveData<Resource<ResultType>> getAsLiveData() {

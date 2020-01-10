@@ -1,6 +1,5 @@
 package com.arbeitapp.arbeitprime.fragments;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -20,25 +19,22 @@ import android.widget.TextView;
 import com.arbeitapp.arbeitprime.R;
 import com.arbeitapp.arbeitprime.adapters.MoviesAdapter;
 import com.arbeitapp.arbeitprime.models.Movie;
-import com.arbeitapp.arbeitprime.utils.ZoomOutPageTransformer;
-import com.arbeitapp.arbeitprime.utils.network.Resource;
+import com.arbeitapp.arbeitprime.utils.others.ZoomOutPageTransformer;
 import com.arbeitapp.arbeitprime.viewmodels.MainViewModel;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainFragment extends Fragment {
 
     private List<Movie> movieList;
     private ZoomOutPageTransformer zoomOutPageTransformer = new ZoomOutPageTransformer();
     private MainViewModel mainViewModel;
-    private ViewPager viewPager;
-    private LinearLayout dots;
-    private TextView[] mdots;
     private MoviesAdapter adapter;
 
-    public MainFragment(){
-
-    }
+    public MainFragment(){ }
 
     public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
@@ -47,15 +43,17 @@ public class MainFragment extends Fragment {
         return new MainFragment();
     }
 
+    @BindView(R.id.viewPager) ViewPager viewPager;
+    @BindView(R.id.dots) LinearLayout dots;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_fragment, container, false);
 
-        mainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+        ButterKnife.bind(this, view);
 
-        viewPager = view.findViewById(R.id.viewPager);
-        dots = view.findViewById(R.id.dots);
+        mainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
 
         adapter = new MoviesAdapter(getActivity(), movieList);
         viewPager.setAdapter(adapter);
@@ -69,20 +67,17 @@ public class MainFragment extends Fragment {
     }
 
     private void loadMovies() {
-        mainViewModel.getTop10Movies().observe(getActivity(), new Observer<Resource<List<Movie>>>() {
-            @Override
-            public void onChanged(Resource<List<Movie>> listResource) {
-                movieList = listResource.data;
-                adapter.setData(movieList);
-            }
+        mainViewModel.getTop10Movies().observe(getActivity(), listResource -> {
+            movieList = listResource.data;
+            adapter.setData(movieList);
         });
     }
 
     public void addDots(int position){
-        mdots = new TextView[10];
+        TextView[] mdots = new TextView[10];
         dots.removeAllViews();
 
-        for (int i = 0 ; i < mdots.length; i++){
+        for (int i = 0; i < mdots.length; i++){
             mdots[i] = new TextView(getActivity());
             mdots[i].setText(Html.fromHtml("&#8226;"));
             mdots[i].setTextSize(35);
