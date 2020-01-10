@@ -28,6 +28,7 @@ public class DetailActivity extends AppCompatActivity {
     private String mUrl;
 
     @BindView(R.id.errorLayout) ConstraintLayout errorlayout;
+    @BindView(R.id.detail_layout) ConstraintLayout detailLayout;
     @BindView(R.id.layout) LinearLayout layout;
     @BindView(R.id.backdrop) ImageView imageView;
     @BindView(R.id.title_on_appbar) TextView title;
@@ -57,6 +58,7 @@ public class DetailActivity extends AppCompatActivity {
                 viewModel.getMovie().observe(this, detail -> {
 
                     getSupportActionBar().setTitle(detail.getOriginalTitle());
+                    detailLayout.setBackgroundResource(R.drawable.background);
                     String image = Utils.IMAGE_PREFIX + detail.getPosterPath();
                     String min = detail.getRuntime() + " min";
                     String rating = Double.toString(detail.getVoteAverage());
@@ -115,8 +117,10 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void errorPage(){
+
         errorlayout.setVisibility(View.VISIBLE);
         layout.setVisibility(View.GONE);
+        detailLayout.setBackgroundResource(0);
     }
 
     //@OnItemClick(R.id.share)
