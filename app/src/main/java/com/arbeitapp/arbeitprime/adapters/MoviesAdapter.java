@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.arbeitapp.arbeitprime.R;
+import com.arbeitapp.arbeitprime.models.Movie;
 import com.arbeitapp.arbeitprime.utils.Utils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -25,25 +26,29 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
+import java.util.List;
+
 public class MoviesAdapter extends PagerAdapter implements View.OnClickListener {
 
     private Context context;
-    private String[] imageUrls, titles, descriptions;
+    private List <Movie> movieList;
     private View view;
     private ProgressBar progressBar;
     private ImageView imageView;
     private TextView titulo, descripcion;
 
-    public MoviesAdapter(Context context, String[] imageUrls, String[] titles, String[] descriptions) {
+    public MoviesAdapter(Context context, List<Movie> movieList) {
         this.context = context;
-        this.imageUrls = imageUrls;
-        this.titles = titles;
-        this.descriptions = descriptions;
+        this.movieList = movieList;
     }
 
     @Override
     public int getCount() {
-        return imageUrls.length;
+        if (movieList != null){
+            return movieList.size();
+        } else {
+            return 0;
+        }
     }
 
     @Override
@@ -60,6 +65,16 @@ public class MoviesAdapter extends PagerAdapter implements View.OnClickListener 
         descripcion = view.findViewById(R.id.description);
         progressBar = view.findViewById(R.id.progress);
 
+        String[] imagesUrl =  new String[10];
+        String[] titles =  new String[10];
+        String[] descriptions =  new String[10];
+
+        for (int i = 0; i < 10; i++){
+            String cmp = movieList.get(i).getPosterPath();
+            imagesUrl[i] = Utils.IMAGE_PREFIX + cmp;
+            titles [i] = movieList.get(i).getTitle();
+            descriptions [i] = movieList.get(i).getOverview();
+        }
 
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(Utils.getRandomDrawbleColor())
@@ -67,7 +82,7 @@ public class MoviesAdapter extends PagerAdapter implements View.OnClickListener 
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .centerCrop();
 
-        Glide.with(context).load(imageUrls[position]).apply(requestOptions)
+        Glide.with(context).load(imagesUrl[position]).apply(requestOptions)
                 .listener(requestListener)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView);
@@ -77,11 +92,8 @@ public class MoviesAdapter extends PagerAdapter implements View.OnClickListener 
 
         container.addView(view);
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        view.setOnClickListener(v -> {
 
-            }
         });
 
         return view;
@@ -99,6 +111,11 @@ public class MoviesAdapter extends PagerAdapter implements View.OnClickListener 
             progressBar.setVisibility(View.GONE);
             return false;        }
     };
+
+    public void setData(List<Movie> movies){
+        this.movieList = movies;
+        notifyDataSetChanged();
+    }
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {

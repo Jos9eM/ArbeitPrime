@@ -1,5 +1,6 @@
 package com.arbeitapp.arbeitprime.fragments;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -19,10 +20,9 @@ import android.widget.TextView;
 import com.arbeitapp.arbeitprime.R;
 import com.arbeitapp.arbeitprime.adapters.MoviesAdapter;
 import com.arbeitapp.arbeitprime.models.Movie;
-import com.arbeitapp.arbeitprime.utils.Utils;
 import com.arbeitapp.arbeitprime.utils.ZoomOutPageTransformer;
+import com.arbeitapp.arbeitprime.utils.network.Resource;
 import com.arbeitapp.arbeitprime.viewmodels.MainViewModel;
-import com.arbeitapp.arbeitprime.views.MainActivity;
 
 import java.util.List;
 
@@ -30,6 +30,7 @@ public class MainFragment extends Fragment {
 
     private List<Movie> movieList;
     private ZoomOutPageTransformer zoomOutPageTransformer = new ZoomOutPageTransformer();
+    private MainViewModel mainViewModel;
     private ViewPager viewPager;
     private LinearLayout dots;
     private TextView[] mdots;
@@ -51,32 +52,30 @@ public class MainFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_fragment, container, false);
 
-        String[] imagesUrl =  new String[10];
-        String[] titles =  new String[10];
-        String[] descriptions =  new String[10];
+        mainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
 
         viewPager = view.findViewById(R.id.viewPager);
         dots = view.findViewById(R.id.dots);
 
-        for (int i = 0; i < 10; i++){
-            String cmp = movieList.get(i).getPosterPath();
-            imagesUrl[i] = Utils.IMAGE_PREFIX + cmp;
-            titles [i] = movieList.get(i).getTitle();
-            descriptions [i] = movieList.get(i).getOverview();
-        }
-
-        adapter = new MoviesAdapter(getActivity(), imagesUrl, titles, descriptions);
+        adapter = new MoviesAdapter(getActivity(), movieList);
         viewPager.setAdapter(adapter);
         viewPager.setPageTransformer(true, zoomOutPageTransformer);
         viewPager.addOnPageChangeListener(pageListener);
         addDots(0);
 
+        loadMovies();
+
         return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    private void loadMovies() {
+        mainViewModel.getTop10Movies().observe(getActivity(), new Observer<Resource<List<Movie>>>() {
+            @Override
+            public void onChanged(Resource<List<Movie>> listResource) {
+                movieList = listResource.data;
+                adapter.setData(movieList);
+            }
+        });
     }
 
     public void addDots(int position){
