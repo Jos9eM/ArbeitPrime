@@ -47,13 +47,42 @@ public class DetailRepository {
                     movie.setValue(response.body());
                 } else {
 
+                    int code = response.code();
+                    String codigo = Integer.toString(code);
+
+                    switch (code){
+                        case 400:
+                            Log.d("RETROFIT " + codigo, "Bad Request");
+                            break;
+                        case 401:
+                            Log.d("RETROFIT " + codigo, "Unauthorized");
+                            break;
+                        case 403:
+                            Log.d("RETROFIT " + codigo, "Forbidden Request");
+                            break;
+                        case 404:
+                            Log.d("RETROFIT " + codigo, "Not Found");
+                            break;
+                        case 500:
+                            Log.d("RETROFIT " + codigo, "Internal Server Error");
+                            break;
+                        case 503:
+                            Log.d("RETROFIT " + codigo, "Service Unavailable");
+                            break;
+                        case 504:
+                            Log.d("RETROFIT " + codigo, "Gateway Timeout");
+                            break;
+                        default:
+                            Log.d("RETROFIT CODE", Integer.toString(code));
+                            break;
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<Detail> call, Throwable t) {
                 movie.setValue(null);
-                Log.w("TAG", "requestFailed", t);
+                Log.w("RETROFIT FAIL", "requestFailed", t);
             }
         });
         return movie;
